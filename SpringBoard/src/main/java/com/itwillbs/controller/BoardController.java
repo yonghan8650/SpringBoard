@@ -1,17 +1,19 @@
 package com.itwillbs.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.itwillbs.domain.BoardVO;
 import com.itwillbs.service.BoardService;
-
 @Controller
 @RequestMapping(value="/board/*")
 public class BoardController {
@@ -45,5 +47,15 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
-	
+	//리스트(GET) : /board/list
+	@GetMapping(value="/list")
+	public void ListGET(Model model) throws Exception{
+		logger.debug(" /board/list -> ListGET() 호출 ");		
+		logger.debug(" /board/list.jsp 연결");
+		// 서비스 -> DAO 게시판 글 목록 가져오기
+		List<BoardVO> boardList = bService.getList();
+		logger.debug(" list.size : " + boardList.size());
+		// 연결된 뷰페이지에 정보 전달(Model)
+		model.addAttribute("boardList",boardList);
+	}
 }
