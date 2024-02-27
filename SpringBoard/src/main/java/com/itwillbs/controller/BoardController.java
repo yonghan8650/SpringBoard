@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itwillbs.domain.BoardVO;
 import com.itwillbs.service.BoardService;
@@ -48,8 +49,7 @@ public class BoardController {
 	}
 	
 	//리스트(GET) : /board/list
-	@GetMapping(value="/list")
-	public void ListGET(Model model) throws Exception{
+	@GetMapping(value="/list")	public void ListGET(Model model) throws Exception{
 		logger.debug(" /board/list -> ListGET() 호출 ");		
 		logger.debug(" /board/list.jsp 연결");
 		// 서비스 -> DAO 게시판 글 목록 가져오기
@@ -58,4 +58,25 @@ public class BoardController {
 		// 연결된 뷰페이지에 정보 전달(Model)
 		model.addAttribute("boardList",boardList);
 	}
+	
+	//본문읽기(GET) //RequestParam
+		@GetMapping(value="/read")
+		public void readGet(@RequestParam("bno") int bno, Model model) throws Exception {
+			//ModelAttribute : 파라메터 저장 + 영역저장  (1:N관계)
+			//RequestParam : 파라메터 저장 (1:1관계)
+			
+			logger.debug(" /board/read -> readGET() 호출 ");
+			
+			//전달 정보 저장
+			logger.debug("bno : " + bno);
+			
+			// 서비스 -> DAO 게시판 글정보 조회 동작
+			BoardVO vo = bService.read(bno);
+			// 해당정보를 저장 -> 연결된 뷰페이지로 전달
+			model.addAttribute("vo", vo);
+			
+			//model.addAttribute(bService.read(bno));
+			
+			// 뷰페이지로 이동(/board/read.jsp)
+		}
 }

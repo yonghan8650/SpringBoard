@@ -21,7 +21,7 @@
 					<c:forEach var="bVO" items="${boardList }">
 						<tr>
 							<td>${bVO.bno }</td>
-							<td>${bVO.title }</td>
+							<td><a href="/board/read?bno=${bVO.bno }">${bVO.title }</a></td>
 							<td>${bVO.writer }</td>
 							<td><span class="badge bg-red">${bVO.viewcnt }</span></td>
 							<td>
@@ -45,6 +45,5 @@
 	</div>
 
 </div>
-<a href="http://localhost:8088/board/register">글쓰기</a>
 
 <%@ include file="../include/footer.jsp"%>
