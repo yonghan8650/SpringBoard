@@ -44,6 +44,30 @@ public class BoardDAOImpl implements BoardDAO{
 		
 		return sqlSession.selectOne(NAMESPACE+".selectBoard", bno);
 	}
-	
 
+	@Override
+	public void boardViewcntUpdate(int bno) throws Exception {
+		logger.debug(" boardViewcntUpdate(int bno) 호출 ");
+		
+		sqlSession.update(NAMESPACE+".updateViewcnt", bno);
+	}
+
+	@Override
+	public void boardUpdate(BoardVO vo) throws Exception {
+		logger.debug(" boardUpdate(BoardVO vo, int bno) 호출 " );
+		
+		sqlSession.update(NAMESPACE+".updateBoard", vo);
+		
+	}
+
+	@Override
+	public void boardDelete(int bno) throws Exception {
+		logger.debug(" boardDelete(int bno) 호출 ");
+		
+		sqlSession.delete(NAMESPACE+".deleteBoard", bno);
+		
+	}
+	
+	
+	
 }
