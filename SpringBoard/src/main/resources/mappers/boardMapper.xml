@@ -50,4 +50,24 @@
   		where bno = #{bno}
   		</delete>
   		
+  		<!-- 글 목록 조회 (페이징 처리) -->
+  		<select id = "selectBoardListPage" resultType="BoardVO">
+  		<![CDATA[
+  		select * from tbl_board 
+  		where bno > 0
+  		order by bno desc
+  		limit #{page},10
+  		]]>
+  		</select>
+  		
+  		<!-- 글 목록 조회 (페이징 처리-Cri) -->
+  		<select id = "selectBoardListPageCri" resultType="BoardVO">
+  		<![CDATA[
+  		select * from tbl_board 
+  		where bno > 0
+  		order by bno desc
+  		limit #{startPage},#{pageSize}
+  		]]>
+  		</select>
+  		
   </mapper>

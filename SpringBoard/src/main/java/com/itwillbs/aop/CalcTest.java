@@ -13,9 +13,5 @@ public class CalcTest {
 		Calculator c = (Calculator)CTX.getBean("proxyCal");
 		
 		c.add(100, 200);
-		
-		
-
 	}
-
 }

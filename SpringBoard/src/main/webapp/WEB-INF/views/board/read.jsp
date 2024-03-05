@@ -57,7 +57,7 @@
 			$(".btn-success").click(function(){
 				//alert(" 게시판으로 이동합니다. ")
 				//목록으로 이동
-				location.href="/board/list";
+				location.href="/board/listCri?page=${cri.page}&pageSize=${param.pageSize}";
 			}); 
 			
 			// '삭제하기' 버튼 클릭시

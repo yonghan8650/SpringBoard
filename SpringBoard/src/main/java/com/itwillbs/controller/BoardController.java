@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itwillbs.domain.BoardVO;
+import com.itwillbs.domain.Criteria;
 import com.itwillbs.service.BoardService;
 @Controller
 @RequestMapping(value="/board/*")
@@ -66,7 +67,7 @@ public class BoardController {
 	
 		//본문읽기(GET) //RequestParam
 		@GetMapping(value="/read")
-		public void readGet(@RequestParam("bno") int bno, Model model, 
+		public void readGet(Criteria cri, @RequestParam("bno") int bno, Model model, 
 				HttpSession session) throws Exception {
 			//ModelAttribute : 파라메터 저장 + 영역저장  (1:N관계)
 			//RequestParam : 파라메터 저장 (1:1관계)
@@ -88,6 +89,8 @@ public class BoardController {
 			BoardVO vo = bService.read(bno);
 			// 해당정보를 저장 -> 연결된 뷰페이지로 전달
 			model.addAttribute("vo", vo);
+			
+			model.addAttribute("cri", cri); //뷰페이지로 페이징 처리 정보 전달
 			//model.addAttribute(bService.read(bno));
 			// 뷰페이지로 이동(/board/read.jsp)
 		}
@@ -135,5 +138,29 @@ public class BoardController {
 			// 삭제후 list 페이지로 이동
 			return "redirect:/board/list";
 		}
+		
+		//리스트Cri(GET) :  http://localhost:8088/board/listCri		//기본값 : page=1&pageSize=10
+		//리스트Cri(GET) 2페이지 :  http://localhost:8088/board/listCri?page=2&pageSize=20
+		@GetMapping(value="/listCri")	
+		public void ListCriGET(Model model,HttpSession session, Criteria cri) throws Exception{
+			logger.debug(" /board/listCri -> ListCriGET() 호출 ");		
+			logger.debug(" /board/listCri.jsp 연결");
+			
+			// 페이징 처리 객체
+			// Criteria cri = new Criteria();
+			// cri.setPageSize(20);
+			// 서비스 -> DAO 게시판 글 목록 가져오기
+			// List<BoardVO> boardList = bService.getList(); all
+			List<BoardVO> boardList = bService.getListCri(cri); //페이징
+			logger.debug(" list.size : " + boardList.size());
+			// 연결된 뷰페이지에 정보 전달(Model)
+			model.addAttribute("boardList",boardList);
+			
+			model.addAttribute("cri", cri);
+			
+			
+			session.setAttribute("viewUpdateStatus", 1);
+		}
+		
 }
 // http://localhost:8088/board/register

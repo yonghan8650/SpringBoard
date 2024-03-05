@@ -3,6 +3,7 @@ package com.itwillbs.persistence;
 import java.util.List;
 
 import com.itwillbs.domain.BoardVO;
+import com.itwillbs.domain.Criteria;
 
 /**
  * 서비스 - Mybatis(mapper) 연결하는 객체
@@ -27,4 +28,10 @@ public interface BoardDAO {
 	
 	// 글 삭제
 	public void boardDelete(int bno) throws Exception;
+	
+	// 글 목록 (페이징)
+		public List<BoardVO> boardListPageSelect(int page) throws Exception;
+	
+		// 글 목록 (페이징 - Cri)
+		public List<BoardVO> boardListCriSelect(Criteria cri) throws Exception;
 }

@@ -3,6 +3,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../include/header.jsp"%>
 
+<!-- ${boardList.size() } -->
+viewUpdateStatus : ${viewUpdateStatus } <br>
+
+<%-- cri.page : ${param.page } <br>
+cri.pageSize : ${param.pageSize } <br> --%>
+cri : ${cri }
+
 <div class="content">
 	<div class="box">
 		<div class="box-header with-border">
@@ -21,7 +28,7 @@
 					<c:forEach var="bVO" items="${boardList }">
 						<tr>
 							<td>${bVO.bno }</td>
-							<td><a href="/board/read?bno=${bVO.bno }">${bVO.title }</a></td>
+							<td><a href="/board/read?bno=${bVO.bno }&page=${cri.page}&pageSize=${cri.pageSize}">${bVO.title }</a></td>
 							<td>${bVO.writer }</td>
 							<td><span class="badge bg-red">${bVO.viewcnt }</span></td>
 							<td>
@@ -31,6 +38,7 @@
 					</c:forEach>
 				</tbody>
 			</table>
+			
 		</div>
 
 		<div class="box-footer clearfix">
